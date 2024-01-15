@@ -36,26 +36,63 @@ namespace WindowsForm
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
+
         {
+            List<Groups> groupslist = new List<Groups>();
+            Groups groups = new Groups(selecGroup.Text);
             Student student = new Student(textName.Text, textSurname.Text);
             Groups.Add(student);
             MessageBox.Show($"{student.Name} Added");
-
+            textName.Text = "";
+            textSurname.Text = "";
+            dataGridView1.DataSource = "";
+            dataGridView1.DataSource = Groups;
+            Groups groups1 = new Groups("p118");
+            Groups groups2 = new Groups("p119");
+            groupslist.Add(groups1);
+            groupslist.Add(groups2);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             dataGridView1.DataSource = new List<string>();
         }
+
+        private void selecGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
     public class Student
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+        public Groups GroupsId { get; set; }
         public Student(string n, string s)
         {
             Name = n;
             Surname = s;
+        }
+    }
+    public class Groups
+    {
+        private static int count = 1;
+        private int _id;
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+        }
+        public string GName { get; set; }
+        public List<Student> StudentsList { get; set; } = new List<Student>();
+        public Groups(string g)
+        {
+            GName = g;
+            _id = count;
+            count++;
+
         }
     }
 }
